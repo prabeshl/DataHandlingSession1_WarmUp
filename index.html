@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Master - Randomized Questions</title>
+    <title>PrabeshQuiz</title>
     <style>
         * {
             box-sizing: border-box;
@@ -309,6 +309,10 @@
             <button id="next-btn" class="btn" disabled>Next Question</button>
         </div>
         <div id="result" class="score"></div>
+        <!-- Copyright footer -->
+        <div style="margin-top:12px; text-align:center; color:#95a5a6; font-size:12px; user-select:none;">
+        © <script>document.write(new Date().getFullYear());</script> Prabesh Luitel
+        </div>
     </div>
 
     <script>
@@ -317,7 +321,7 @@
         // ============================================
         const quizConfig = {
             // Page title (shown in browser tab)
-            pageTitle: "Topic 1 WarmUp Quiz",
+            pageTitle: "Topic 1 Warm-Up",
             
             // Quiz title (shown on the page)
             quizTitle: "Data Types & Formats Quiz",
@@ -356,7 +360,7 @@
                     options: ["A CSV file", "A text document with paragraphs of text", "A spreadsheet with rows and columns", "A JSON file with key-value pairs"],
                     answer: "A text document with paragraphs of text",
                     explanation: "Unstructured data lacks a predefined data model, like free-form text documents, unlike structured formats like CSV or JSON."
-                }
+                }                                
             ]
         };
         // ============================================
@@ -471,7 +475,8 @@
                                 <div class="feedback-answer correct">
                                     <span class="feedback-label">Correct answer:</span> ${item.correctAnswer}
                                 </div>
-                                ${!isCorrect ? `<div style="margin-top: 10px; font-style: italic; color: #7f8c8d; font-size: clamp(14px, 3vw, 16px);">Explanation: ${item.explanation}</div>` : ''}
+                                <div style="margin-top: 10px; font-style: italic; color: #7f8c8d; font-size: clamp(14px, 3vw, 16px);"> Explanation: ${item.explanation}</div>
+
                             </div>
                         `;
                     }).join('')}
