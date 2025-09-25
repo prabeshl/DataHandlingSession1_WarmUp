@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Master - Responsive System</title>
+    <title>Quiz Master - Randomized Questions</title>
     <style>
         * {
             box-sizing: border-box;
@@ -210,6 +210,14 @@
             margin-top: 20px;
         }
         
+        .shuffle-info {
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
         /* Mobile-specific adjustments */
         @media (max-width: 768px) {
             body {
@@ -285,6 +293,7 @@
     <div class="quiz-container">
         <h1 id="quiz-title">Quiz Title</h1>
         <p id="quiz-description" class="quiz-description">Quiz Description</p>
+        <div class="shuffle-info">Practice is the path to excellence - every line of code moves you forward</div>
         
         <div class="question-counter">
             Question <span id="current-question">1</span> of <span id="total-questions">0</span>
@@ -308,10 +317,10 @@
         // ============================================
         const quizConfig = {
             // Page title (shown in browser tab)
-            pageTitle: "Session 1 Warm-up Quiz",
+            pageTitle: "Topic 1 WarmUp Quiz",
             
             // Quiz title (shown on the page)
-            quizTitle: "Topic 1: Warm-up Quiz",
+            quizTitle: "Data Types & Formats Quiz",
             
             // Quiz description
             quizDescription: "Test your knowledge of data types and file formats",
@@ -351,8 +360,17 @@
             ]
         };
         // ============================================
-        // END OF CONFIGURATION - DO NOT EDIT BELOW
+        // DO NOT EDIT
         // ============================================
+
+        // Shuffle helper function
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
 
         // Set page title
         document.title = quizConfig.pageTitle;
@@ -377,7 +395,10 @@
         // Initialize total questions display
         totalQuestionsElement.textContent = quizConfig.questions.length;
 
-        // Display the current question
+        // Shuffle questions initially
+        shuffleArray(quizConfig.questions);
+
+        // Display the current question with shuffled options
         function displayQuestion() {
             const question = quizConfig.questions[currentQuestionIndex];
             currentQuestionElement.textContent = currentQuestionIndex + 1;
@@ -386,10 +407,13 @@
             const progressPercentage = ((currentQuestionIndex + 1) / quizConfig.questions.length) * 100;
             progressElement.style.width = `${progressPercentage}%`;
 
+            // Shuffle the options for this question
+            const shuffledOptions = shuffleArray([...question.options]);
+
             quizContainer.innerHTML = `
                 <div class="question">${question.question}</div>
                 <ul class="options">
-                    ${question.options
+                    ${shuffledOptions
                         .map(
                             (option, index) => `
                                 <li>
@@ -461,11 +485,15 @@
             document.getElementById('restart-btn').addEventListener('click', restartQuiz);
         }
 
-        // Restart the quiz
+        // Restart the quiz with new randomization
         function restartQuiz() {
             currentQuestionIndex = 0;
             score = 0;
             userAnswers = [];
+            
+            // Reshuffle questions for a new order
+            shuffleArray(quizConfig.questions);
+            
             quizContainer.style.display = 'block';
             nextButton.style.display = 'inline-block';
             resultContainer.innerHTML = '';
